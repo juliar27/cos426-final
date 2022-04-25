@@ -7,12 +7,17 @@ class Bird extends Group {
         // Call parent Group() constructor
         super();
 
+        this.state = {
+            height: parent.state.height,
+            tweenCount: 0
+        };
+
         const map = new THREE.TextureLoader().load( 'src/assets/bird.png' );
         map.magFilter = THREE.NearestFilter;
         const material = new THREE.SpriteMaterial( { map: map, transparent: true } );
 
         const sprite = new THREE.Sprite( material );
-        sprite.scale.set( parent.state.width * 0.05, parent.state.height * 0.07, 1 );
+        sprite.scale.set( parent.state.width * 0.03, parent.state.height * 0.04, 1 );
         sprite.position.z = 0; 
         sprite.position.x = - parent.state.width / 3; 
         sprite.position.y = 0;
@@ -43,15 +48,20 @@ class Bird extends Group {
 
     press() {
         const jumpUp = new TWEEN.Tween(this.position)
-            .to({ y: this.position.y + 100 }, 300)
+            .to({ y: this.position.y + 40 }, 300)
             .easing(TWEEN.Easing.Quadratic.Out);
+        const fallDown = new TWEEN.Tween(this.position)
+            .to({ y: -this.state.height / 2 }, 900)
+            .easing(TWEEN.Easing.Quadratic.In);
+        jumpUp.onStart(() => this.state.tweenCount++);
+        jumpUp.onComplete(() => {this.state.tweenCount--; if (this.state.tweenCount === 0) fallDown.start();});
         // Start animation
         jumpUp.start();
     }
 
     update(timeStamp) {
-        this.children[0].position.set(this.children[0].position.x, this.children[0].position.y - 2, this.children[0].position.z);
-
+       // this.children[0].position.set(this.children[0].position.x, this.children[0].position.y - this.state.velocity, this.children[0].position.z);
+       // this.state.velocity += 0.05;
         TWEEN.update();
         // Advance tween animations, if any exist
        // TWEEN.update();

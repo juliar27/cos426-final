@@ -12,20 +12,21 @@ class Pipe extends Group {
             width : parent.state.width,
             height: parent.state.height,
             bird: parent.children[0],
-            parent: parent
+            parent: parent,
+            scored: false
         }
 
         const map = new THREE.TextureLoader().load( 'src/assets/pipe.png' );
         map.magFilter = THREE.NearestFilter;
         const material = new THREE.SpriteMaterial( { map: map, transparent: true } );
 
-        this.state.bottomLength = parent.state.height * 0.2 + Math.random() * parent.state.height * 0.4;
-        const topLength = parent.state.height * 0.8 - this.state.bottomLength;
+        this.state.bottomLength = (parent.state.height * 0.2 + Math.random() * parent.state.height * 0.4) * 0.8;
+        const topLength = (parent.state.height * 0.8 - this.state.bottomLength) * 0.8;
 
         const bottomSprite = new THREE.Sprite( material );
         bottomSprite.scale.set( parent.state.width * 0.05, this.state.bottomLength, 1 );
         bottomSprite.position.z = 0; 
-        bottomSprite.position.x = parent.state.width / 2; 
+        bottomSprite.position.x = parent.state.width / 2 + bottomSprite.scale.x; 
         bottomSprite.position.y = -parent.state.height / 2 + bottomSprite.scale.y / 2;
         this.add( bottomSprite );
 
@@ -33,7 +34,7 @@ class Pipe extends Group {
         const topSprite = new THREE.Sprite( topMaterial );
         topSprite.scale.set( parent.state.width * 0.05, topLength, 1 );
         topSprite.position.z = 0; 
-        topSprite.position.x = parent.state.width / 2; 
+        topSprite.position.x = parent.state.width / 2 + topSprite.scale.x; 
         topSprite.position.y = parent.state.height / 2 - topSprite.scale.y / 2;
         this.add( topSprite );
 
@@ -51,6 +52,13 @@ class Pipe extends Group {
             this.state.parent.kill();
         }
 
+        if (topPipeBox.max.x < birdBox.min.x) {
+            if (!this.state.scored) {
+                this.state.parent.state.score++;
+                this.state.parent.state.document.getElementById('score_text').innerHTML = 'Score: ' + this.state.parent.state.score;
+                this.state.scored = true;
+            }
+        }
     }
 }
 
