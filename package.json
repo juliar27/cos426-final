@@ -2,7 +2,7 @@
   "name": "lower-case-dashed-name-of-project",
   "repository": "REPOSITORY-NAME-AS-IT-APPEARS-IN-GITHUB-URL",
   "version": "0.1.0",
-  "title": "PROJECT TITLE HERE",
+  "title": "Flappy Bird Revisited",
   "description": "SHORT DESCRIPTION OF PROJECT HERE. ONE TO TWO SENTENCES MAX",
   "keywords": [
     "Princeton",
@@ -40,7 +40,7 @@
     "raw-loader": "^4.0.1",
     "rimraf": "^3.0.2",
     "webpack": "^4.43.0",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.11.3"
   },
   "engines": {
     "node": ">=8.0.0"

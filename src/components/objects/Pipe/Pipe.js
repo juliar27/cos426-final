@@ -3,6 +3,8 @@ import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import MODEL from '../Flower/flower.gltf';
 import * as THREE from 'three';
+import { Score, Bird } from 'objects';
+
 
 class Pipe extends Group {
     constructor(parent) {
@@ -20,7 +22,7 @@ class Pipe extends Group {
         const material = new THREE.SpriteMaterial( { map: map, transparent: true } );
 
         this.state.bottomLength = parent.state.height * 0.2 + Math.random() * parent.state.height * 0.4;
-        const topLength = parent.state.height * 0.8 - this.state.bottomLength;
+        const topLength = parent.state.height * 0.5 - this.state.bottomLength;
 
         const bottomSprite = new THREE.Sprite( material );
         bottomSprite.scale.set( parent.state.width * 0.05, this.state.bottomLength, 1 );
@@ -43,12 +45,20 @@ class Pipe extends Group {
     update(timeStamp, stepSize) {
         this.children[0].position.set(this.children[0].position.x - stepSize, this.children[0].position.y, this.children[0].position.z);
         this.children[1].position.set(this.children[1].position.x - stepSize, this.children[1].position.y, this.children[1].position.z);
+        console.log("children");
+        console.log((this.children[0]));
+        console.log(this.children[1]);
 
         var birdBox = new THREE.Box3().setFromObject(this.state.bird.children[0]).expandByScalar(0.9);
         var topPipeBox = new THREE.Box3().setFromObject(this.children[0]);
         var bottomPipeBox = new THREE.Box3().setFromObject(this.children[1]);
-        if (birdBox.intersectsBox(topPipeBox) || birdBox.intersectsBox(bottomPipeBox)) {
-            this.state.parent.kill();
+        if (birdBox.intersectsBox(topPipeBox) || birdBox.intersectsBox(bottomPipeBox) 
+        || birdBox.min.y <= -this.parent.state.height / 2 || birdBox.max.y >= this.parent.state.height / 2) {
+            console.log(this.parent.state);
+            // alert("Game Over!");
+            const gameOver = new Score(this);
+            // this.add(gameOver);
+            this.parent.state.kill();
         }
 
     }

@@ -50,7 +50,7 @@ class Bird extends Group {
     }
 
     update(timeStamp) {
-        this.children[0].position.set(this.children[0].position.x, this.children[0].position.y - 2, this.children[0].position.z);
+        this.children[0].position.set(this.children[0].position.x, this.children[0].position.y - 3, this.children[0].position.z);
 
         TWEEN.update();
         // Advance tween animations, if any exist

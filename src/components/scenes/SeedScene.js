@@ -1,7 +1,7 @@
 import * as Dat from 'dat.gui';
 import * as THREE from 'three';
 import { Scene, Color } from 'three';
-import { Bird, Pipe } from 'objects';
+import { Bird, Pipe, Score } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -23,10 +23,6 @@ class SeedScene extends Scene {
 
         let map = new THREE.TextureLoader().load('src/assets/skygrass.jpg');
        // this.background = map;
-
-
-
-
 
         // Add meshes to scene
         const bird = new Bird(this);
@@ -53,7 +49,7 @@ class SeedScene extends Scene {
         }
 
         for (const obj of updateList) {
-            obj.update(timeStamp, 1);
+            obj.update(timeStamp, 3);
         }
 
         this.steps++;
