@@ -6,17 +6,28 @@
  * handles window resizes.
  *
  */
-import { WebGLRenderer, PerspectiveCamera, Vector3 } from 'three';
+import { WebGLRenderer, PerspectiveCamera, Vector3, OrthographicCamera } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 
 // Initialize core ThreeJS components
-const scene = new SeedScene();
-const camera = new PerspectiveCamera();
+const scene = new SeedScene(960, 960 * window.innerHeight / window.innerWidth);
+//const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
-
+renderer.setSize(window.innerWidth, window.innerHeight);
 // Set up camera
-camera.position.set(6, 3, -10);
+const aspectRatio = window.innerWidth / window.innerHeight;
+const cameraWidth = 960;
+const cameraHeight = cameraWidth / aspectRatio;
+const camera = new OrthographicCamera(
+    cameraWidth / -2, // left
+    cameraWidth / 2, // right
+    cameraHeight / 2, // top
+    cameraHeight / -2, // bottom
+    0, // near plane
+    150 // far plane
+);
+camera.position.set(0, 0, 0.5);
 camera.lookAt(new Vector3(0, 0, 0));
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -53,3 +64,9 @@ const windowResizeHandler = () => {
 };
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
+
+document.body.onkeyup = function(e){
+    if(e.key == ' '){
+        scene.press();
+    }
+}
