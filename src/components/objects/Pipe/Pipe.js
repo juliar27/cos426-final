@@ -44,7 +44,7 @@ class Pipe extends Group {
         this.children[0].position.set(this.children[0].position.x - stepSize, this.children[0].position.y, this.children[0].position.z);
         this.children[1].position.set(this.children[1].position.x - stepSize, this.children[1].position.y, this.children[1].position.z);
 
-        var birdBox = new THREE.Box3().setFromObject(this.state.bird.children[0]);
+        var birdBox = new THREE.Box3().setFromObject(this.state.bird.children[0]).expandByScalar(0.9);
         var topPipeBox = new THREE.Box3().setFromObject(this.children[0]);
         var bottomPipeBox = new THREE.Box3().setFromObject(this.children[1]);
         if (birdBox.intersectsBox(topPipeBox) || birdBox.intersectsBox(bottomPipeBox)) {

@@ -29,9 +29,7 @@ class Bird extends Group {
         // Use timing library for more precice "bounce" animation
         // TweenJS guide: http://learningthreejs.com/blog/2011/08/17/tweenjs-for-smooth-animation/
         // Possible easings: http://sole.github.io/tween.js/examples/03_graphs.html
-        const jumpUp = new TWEEN.Tween(this.position)
-            .to({ y: this.position.y + 1 }, 300)
-            .easing(TWEEN.Easing.Quadratic.Out);
+        
         const fallDown = new TWEEN.Tween(this.position)
             .to({ y: 0 }, 300)
             .easing(TWEEN.Easing.Quadratic.In);
@@ -44,13 +42,17 @@ class Bird extends Group {
     }
 
     press() {
-        this.children[0].position.set(this.children[0].position.x, this.children[0].position.y + 50, this.children[0].position.z);
-
+        const jumpUp = new TWEEN.Tween(this.position)
+            .to({ y: this.position.y + 100 }, 300)
+            .easing(TWEEN.Easing.Quadratic.Out);
+        // Start animation
+        jumpUp.start();
     }
 
     update(timeStamp) {
-        this.children[0].position.set(this.children[0].position.x, this.children[0].position.y - 1, this.children[0].position.z);
+        this.children[0].position.set(this.children[0].position.x, this.children[0].position.y - 2, this.children[0].position.z);
 
+        TWEEN.update();
         // Advance tween animations, if any exist
        // TWEEN.update();
     }
