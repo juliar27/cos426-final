@@ -5,7 +5,7 @@ import { Bird, Pipe, Score } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
-    constructor(width, height) {
+    constructor(width, height, document) {
         // Call parent Scene() constructor
         super(width, height);
 
@@ -15,7 +15,9 @@ class SeedScene extends Scene {
             rotationSpeed: 1,
             updateList: [],
             width: width,
-            height: height
+            height: height,
+            score: 0,
+            document: document
         };
 
         // Set background to a nice color
@@ -43,21 +45,31 @@ class SeedScene extends Scene {
         const { rotationSpeed, updateList } = this.state;
       //  this.rotation.y = (rotationSpeed * timeStamp) / 10000;
         // Call update for each object in the updateList
-        if (this.steps % 150 === 0) {
+        if (this.steps > 150) {
             const newPipe = new Pipe(this);
             this.add(newPipe);
+            this.steps = 0;
         }
+
+        var step = Math.pow(1.02, this.state.score);
 
         for (const obj of updateList) {
-            obj.update(timeStamp, 3);
+            obj.update(timeStamp, step);
         }
 
-        this.steps++;
+        this.steps += step;
     }
 
     press() {
         this.children[0].press();
     }
+
+    kill() {
+        console.log(this.state.score);
+        console.log(x);
+    }
+
+   
 }
 
 export default SeedScene;

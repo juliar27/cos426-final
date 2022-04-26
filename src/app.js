@@ -11,7 +11,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 
 // Initialize core ThreeJS components
-const scene = new SeedScene(960, 960 * window.innerHeight / window.innerWidth);
+const scene = new SeedScene(960, 960 * window.innerHeight / window.innerWidth, document);
 //const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -37,6 +37,16 @@ canvas.style.display = 'block'; // Removes padding below canvas
 document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
+
+var score_text = document.createElement('div');
+score_text.style.position = 'absolute';
+score_text.style.width = 100;
+score_text.style.height = 100;
+score_text.innerHTML = "Score: 0";
+score_text.style.top = 0.09 * window.innerHeight + 'px';
+score_text.style.left = 0.86 * window.innerWidth + 'px';
+score_text.id = "score_text"
+document.body.appendChild(score_text);
 
 // Set up controls
 const controls = new OrbitControls(camera, canvas);
