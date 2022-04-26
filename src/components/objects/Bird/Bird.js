@@ -60,10 +60,10 @@ class Bird extends Group {
     }
 
     update(timeStamp) {
-        if (this.parent.state.game_state === "active") {
-            this.children[0].position.set(this.children[0].position.x, this.children[0].position.y - 0.2, this.children[0].position.z);
+        // if (this.parent.state.game_state === "active") {
+        //     this.children[0].position.set(this.children[0].position.x, this.children[0].position.y - 0.2, this.children[0].position.z);
 
-        }
+        // }
         TWEEN.update();
 
 

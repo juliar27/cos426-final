@@ -22,8 +22,8 @@ class Pipe extends Group {
         map.magFilter = THREE.NearestFilter;
         const material = new THREE.SpriteMaterial( { map: map, transparent: true } );
 
-        this.state.bottomLength = parent.state.height * 0.2 + Math.random() * parent.state.height * 0.4;
-        const topLength = parent.state.height * 0.5 - this.state.bottomLength;
+        this.state.bottomLength = (parent.state.height * 0.2 + Math.random() * parent.state.height * 0.4) * 0.8;
+        const topLength = (parent.state.height * 0.8 - this.state.bottomLength) * 0.8;
 
 
         const bottomSprite = new THREE.Sprite( material );
@@ -53,10 +53,6 @@ class Pipe extends Group {
         var bottomPipeBox = new THREE.Box3().setFromObject(this.children[1]);
         if (birdBox.intersectsBox(topPipeBox) || birdBox.intersectsBox(bottomPipeBox) 
         || birdBox.min.y <= -this.parent.state.height / 2 || birdBox.max.y >= this.parent.state.height / 2) {
-            console.log(this.parent.state);
-            // alert("Game Over!");
-            // const gameOver = new Score(this);
-            // this.add(gameOver);
             this.parent.kill();
         }
 

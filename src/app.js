@@ -68,14 +68,10 @@ controls.update();
 var dead = false;
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
-    if (!dead) {
         controls.update();
         renderer.render(scene, camera);
-        if (scene.update(timeStamp)) {
-            dead = true;
-        }
+        scene.update(timeStamp);
         window.requestAnimationFrame(onAnimationFrameHandler);
-    }
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
@@ -85,6 +81,11 @@ const windowResizeHandler = () => {
     renderer.setSize(innerWidth, innerHeight);
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
+
+    score_text.style.top = 0.09 * window.innerHeight + 'px';
+    score_text.style.left = 0.86 * window.innerWidth + 'px';
+    game_over_text.style.top = 0.5 * window.innerHeight + 'px';
+    game_over_text.style.left = 0.5 * window.innerWidth + 'px';
 };
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
@@ -92,5 +93,11 @@ window.addEventListener('resize', windowResizeHandler, false);
 document.body.onkeyup = function(e){
     if(e.key == ' '){
         scene.press();
+    } else if (e.key == 'x') {
+        if (scene.isDead()) {
+            scene.restart();
+            document.getElementById('game_over_text').innerHTML = ''
+            document.getElementById('score_text').innerHTML = 'Score: 0';
+        }
     }
 }
