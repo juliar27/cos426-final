@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Scene, Color } from 'three';
-import { Bird, Pipe } from 'objects';
+import { Bird, Pipe, Score } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -15,7 +15,8 @@ class SeedScene extends Scene {
             width: width,
             height: height,
             score: 0,
-            document: document
+            document: document,
+            game_state: "waiting"
         };
 
         // Set background to a nice color
@@ -23,10 +24,6 @@ class SeedScene extends Scene {
 
         let map = new THREE.TextureLoader().load('src/assets/skygrass.jpg');
        // this.background = map;
-
-
-
-
 
         // Add meshes to scene
         const bird = new Bird(this);
@@ -50,7 +47,7 @@ class SeedScene extends Scene {
             this.steps = 0;
         }
 
-        var step = Math.pow(1.02, this.state.score);
+        var step = this.state.game_state == "active" ? Math.pow(1.02, this.state.score) : 0;
 
         var dead = false;
         for (const obj of updateList) {
@@ -62,11 +59,20 @@ class SeedScene extends Scene {
     }
 
     press() {
-        this.children[0].press();
+        if (this.state.game_state == "dead"){
+            document.location.reload();
+        }
+        else {
+            this.state.game_state = "active";
+            this.children[0].press();
+        }
     }
 
     kill() {
-   
+        console.log(this.state.score);
+        const gameOver = new Score(this);
+        this.add(gameOver);
+        this.state.game_state = "dead";
     }
 
    

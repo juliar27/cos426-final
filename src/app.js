@@ -48,6 +48,16 @@ score_text.style.left = 0.86 * window.innerWidth + 'px';
 score_text.id = "score_text"
 document.body.appendChild(score_text);
 
+var game_over_text = document.createElement('div');
+game_over_text.style.position = 'absolute';
+game_over_text.style.width = 300;
+game_over_text.style.height = 300;
+game_over_text.innerHTML = "";
+game_over_text.style.top = 0.5 * window.innerHeight + 'px';
+game_over_text.style.left = 0.5 * window.innerWidth + 'px';
+game_over_text.id = "game_over_text"
+document.body.appendChild(game_over_text);
+
 // Set up controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;

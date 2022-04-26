@@ -60,9 +60,15 @@ class Bird extends Group {
     }
 
     update(timeStamp) {
+        if (this.parent.state.game_state === "active") {
+            this.children[0].position.set(this.children[0].position.x, this.children[0].position.y - 0.2, this.children[0].position.z);
+
+        }
+        TWEEN.update();
+
+
        // this.children[0].position.set(this.children[0].position.x, this.children[0].position.y - this.state.velocity, this.children[0].position.z);
        // this.state.velocity += 0.05;
-        TWEEN.update();
         // Advance tween animations, if any exist
        // TWEEN.update();
        return false;
