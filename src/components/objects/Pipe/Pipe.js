@@ -50,6 +50,7 @@ class Pipe extends Group {
         var bottomPipeBox = new THREE.Box3().setFromObject(this.children[1]);
         if (birdBox.intersectsBox(topPipeBox) || birdBox.intersectsBox(bottomPipeBox)) {
             this.state.parent.kill();
+            return true;
         }
 
         if (topPipeBox.max.x < birdBox.min.x) {
@@ -59,6 +60,7 @@ class Pipe extends Group {
                 this.state.scored = true;
             }
         }
+        return false;
     }
 }
 

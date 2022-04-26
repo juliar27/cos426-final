@@ -1,4 +1,3 @@
-import * as Dat from 'dat.gui';
 import * as THREE from 'three';
 import { Scene, Color } from 'three';
 import { Bird, Pipe } from 'objects';
@@ -11,7 +10,6 @@ class SeedScene extends Scene {
 
         // Init state
         this.state = {
-            gui: new Dat.GUI(), // Create GUI for scene
             rotationSpeed: 1,
             updateList: [],
             width: width,
@@ -35,9 +33,6 @@ class SeedScene extends Scene {
         const lights = new BasicLights();
         this.add(bird, lights);
 
-        // Populate GUI
-        this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
-
         this.steps = 0;
     }
 
@@ -57,11 +52,13 @@ class SeedScene extends Scene {
 
         var step = Math.pow(1.02, this.state.score);
 
+        var dead = false;
         for (const obj of updateList) {
-            obj.update(timeStamp, step);
+            dead = dead || obj.update(timeStamp, step);
         }
 
         this.steps += step;
+        return dead;
     }
 
     press() {
@@ -69,8 +66,7 @@ class SeedScene extends Scene {
     }
 
     kill() {
-        console.log(this.state.score);
-        console.log(x);
+   
     }
 
    

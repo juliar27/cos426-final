@@ -65,6 +65,7 @@ class Bird extends Group {
         TWEEN.update();
         // Advance tween animations, if any exist
        // TWEEN.update();
+       return false;
     }
 }
 

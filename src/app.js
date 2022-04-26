@@ -55,13 +55,17 @@ controls.enablePan = false;
 controls.minDistance = 4;
 controls.maxDistance = 16;
 controls.update();
-
+var dead = false;
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
-    controls.update();
-    renderer.render(scene, camera);
-    scene.update && scene.update(timeStamp);
-    window.requestAnimationFrame(onAnimationFrameHandler);
+    if (!dead) {
+        controls.update();
+        renderer.render(scene, camera);
+        if (scene.update(timeStamp)) {
+            dead = true;
+        }
+        window.requestAnimationFrame(onAnimationFrameHandler);
+    }
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
