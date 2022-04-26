@@ -17,7 +17,8 @@ class SeedScene extends Scene {
             width: width,
             height: height,
             score: 0,
-            document: document
+            document: document,
+            game_state: "waiting"
         };
 
         // Set background to a nice color
@@ -51,7 +52,7 @@ class SeedScene extends Scene {
             this.steps = 0;
         }
 
-        var step = Math.pow(1.02, this.state.score);
+        var step = this.state.game_state == "active" ? Math.pow(1.02, this.state.score) : 0;
 
         for (const obj of updateList) {
             obj.update(timeStamp, step);
@@ -61,12 +62,20 @@ class SeedScene extends Scene {
     }
 
     press() {
-        this.children[0].press();
+        if (this.state.game_state == "dead"){
+            document.location.reload();
+        }
+        else {
+            this.state.game_state = "active";
+            this.children[0].press();
+        }
     }
 
     kill() {
         console.log(this.state.score);
-        console.log(x);
+        const gameOver = new Score(this);
+        this.add(gameOver);
+        this.state.game_state = "dead";
     }
 
    

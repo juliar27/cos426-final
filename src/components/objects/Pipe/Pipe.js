@@ -47,9 +47,6 @@ class Pipe extends Group {
     update(timeStamp, stepSize) {
         this.children[0].position.set(this.children[0].position.x - stepSize, this.children[0].position.y, this.children[0].position.z);
         this.children[1].position.set(this.children[1].position.x - stepSize, this.children[1].position.y, this.children[1].position.z);
-        console.log("children");
-        console.log((this.children[0]));
-        console.log(this.children[1]);
 
         var birdBox = new THREE.Box3().setFromObject(this.state.bird.children[0]).expandByScalar(0.9);
         var topPipeBox = new THREE.Box3().setFromObject(this.children[0]);
@@ -58,9 +55,9 @@ class Pipe extends Group {
         || birdBox.min.y <= -this.parent.state.height / 2 || birdBox.max.y >= this.parent.state.height / 2) {
             console.log(this.parent.state);
             // alert("Game Over!");
-            const gameOver = new Score(this);
+            // const gameOver = new Score(this);
             // this.add(gameOver);
-            this.parent.state.kill();
+            this.parent.kill();
         }
 
         if (topPipeBox.max.x < birdBox.min.x) {

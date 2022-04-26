@@ -12,14 +12,16 @@ class Score extends Group {
         const material = new THREE.SpriteMaterial( { map: map, transparent: true } );
 
         const sprite = new THREE.Sprite( material );
-        sprite.scale.set( parent.state.width * 0.05, parent.state.height * 0.07, 1 );
-        sprite.position.z = 0; 
-        sprite.position.x = - parent.state.width / 3; 
+        sprite.scale.set( parent.state.width * 0.5, parent.state.height * 0.5, 1 );
+        sprite.position.z = 1.5; 
+        sprite.position.x = 0; 
         sprite.position.y = 0;
         this.add( sprite );
 
         // Add self to parent's update list
         parent.addToUpdateList(this);
+        parent.state.document.getElementById('game_over_text').innerHTML = '' +  parent.state.score;
+
     }
 
 
